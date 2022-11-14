@@ -29,29 +29,30 @@ contract Payable {
 
     function receiveMTRG() external payable {
         uint256 amount = mtrgAddress.allowance(msg.sender, address(this));
-        mtrgAddress.transferFrom(msg.sender, address(this), amount);
-
         mtrgBalance += amount;
+        mtrgAddress.transferFrom(msg.sender, address(this), amount);
     }
 
     function receiveVOLT() external payable {
         uint256 amount = voltAddress.allowance(msg.sender, address(this));
-        voltAddress.transferFrom(msg.sender, address(this), amount);
-
         voltBalance += amount;
+        voltAddress.transferFrom(msg.sender, address(this), amount);
     }
 
     function transferMTR(address toAddress, uint256 transferAmount) public {
+        require(mtrBalance >= transferAmount, "Invalid amount");
         mtrBalance -= transferAmount;
         payable(toAddress).transfer(transferAmount);
     }
 
     function transferMTRG(address toAddress, uint256 transferAmount) public {
+        require(mtrgBalance >= transferAmount, "Invalid amount");
         mtrgBalance -= transferAmount;
         mtrgAddress.transfer(toAddress, transferAmount);
     }
 
     function transferVOLT(address toAddress, uint256 transferAmount) public {
+        require(voltBalance >= transferAmount, "Invalid amount");
         voltBalance -= transferAmount;
         voltAddress.transfer(toAddress, transferAmount);
     }
