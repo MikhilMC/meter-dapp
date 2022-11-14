@@ -21,6 +21,13 @@ async function main() {
   await volt.deployed();
   const voltAddress = await volt.address;
   console.log(`Greeter contract deployed at ${voltAddress}`);
+
+  console.log("Deploying Payable contract...");
+  const Payable = await hre.ethers.getContractFactory("Payable");
+  const payable = await Payable.deploy(mtrgAddress, voltAddress);
+  await payable.deployed();
+  const payableAddress = await payable.address;
+  console.log(`Payable contract deployed at ${payableAddress}`);
 }
 
 main().catch((error) => {
