@@ -62,5 +62,13 @@ describe("MeterNFT.sol", () => {
         "ERC721: caller is not token owner or approved"
       );
     });
+
+    it("Should revert if try to burn a token, which is already burned before", async () => {
+      await meterNFT.connect(account1).burn(0);
+
+      await expect(meterNFT.connect(account1).burn(0)).to.be.revertedWith(
+        "ERC721: invalid token ID"
+      );
+    });
   });
 });
